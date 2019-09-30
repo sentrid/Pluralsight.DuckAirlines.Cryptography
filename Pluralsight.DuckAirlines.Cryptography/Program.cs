@@ -24,6 +24,10 @@ namespace Pluralsight.DuckAirlines.Cryptography
             switch (args[0])
             {
                 case "create":
+                    if (!Directory.Exists(@"C:\Pluralsight\Keys\DuckAir"))
+                    {
+                        Directory.CreateDirectory(@"C:\Pluralsight\Keys\DuckAir");
+                    }
                     var keyConfiguration = Key.ConfigureKeyPair();
                     Key.GenerateKeyPair(keyConfiguration);
                     break;
