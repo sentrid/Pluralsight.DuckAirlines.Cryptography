@@ -7,7 +7,7 @@ using Org.BouncyCastle.Crypto.Operators;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
-using Pluralsight.TrustUs.DataStructures;
+using Pluralsight.DuckAirlines.Cryptography.DataStructures;
 
 namespace Pluralsight.DuckAirlines.Cryptography
 {
@@ -26,7 +26,8 @@ namespace Pluralsight.DuckAirlines.Cryptography
                 $"L={keyConfiguration.DistinguishedName.Locality}, " +
                 $"O={keyConfiguration.DistinguishedName.Organization}, " +
                 $"OU={keyConfiguration.DistinguishedName.OrganizationalUnit}, " +
-                $"CN={keyConfiguration.DistinguishedName.CommonName}");
+                $"CN={keyConfiguration.DistinguishedName.CommonName}, " +
+                $"E={keyConfiguration.DistinguishedName.EmailAddress}");
 
             var signatureFactory = new Asn1SignatureFactory("SHA512WITHRSA", keyPair.Private);
             var certificateSigningRequest =
@@ -67,6 +68,8 @@ namespace Pluralsight.DuckAirlines.Cryptography
             keyConfiguration.DistinguishedName.OrganizationalUnit = Console.ReadLine();
             Console.Write("Common Name: ");
             keyConfiguration.DistinguishedName.CommonName = Console.ReadLine();
+            Console.Write("Email Address: ");
+            keyConfiguration.DistinguishedName.EmailAddress = Console.ReadLine();
 
             keyConfiguration.KeystoreFileName =
                 keyConfiguration.DistinguishedName.CommonName?.Replace(" ", string.Empty) + ".key";

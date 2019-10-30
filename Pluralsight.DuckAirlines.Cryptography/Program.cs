@@ -1,13 +1,5 @@
 ﻿using System;
 using System.IO;
-using Org.BouncyCastle.Asn1.X509;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Generators;
-using Org.BouncyCastle.Crypto.Operators;
-using Org.BouncyCastle.OpenSsl;
-using Org.BouncyCastle.Pkcs;
-using Org.BouncyCastle.Security;
-using Pluralsight.TrustUs.DataStructures;
 
 namespace Pluralsight.DuckAirlines.Cryptography
 {
@@ -25,15 +17,21 @@ namespace Pluralsight.DuckAirlines.Cryptography
             {
                 case "create":
                     if (!Directory.Exists(@"C:\Pluralsight\Keys\DuckAir"))
-                    {
                         Directory.CreateDirectory(@"C:\Pluralsight\Keys\DuckAir");
-                    }
                     var keyConfiguration = Key.ConfigureKeyPair();
                     Key.GenerateKeyPair(keyConfiguration);
                     break;
                 case "encrypt":
-                    var encrypt = CryptographyOperations.Encrypt("I am the very model of a modern major general.", @"C:\Pluralsight\Keys\DuckAir\FlightOps.cer");
+                    var encrypt = CryptographyOperations.Encrypt("I am the very model of a modern major general.",
+                        @"C:\Pluralsight\Keys\DuckAir\FlightOps.cer");
                     CryptographyOperations.Decrypt(encrypt, @"C:\Pluralsight\Keys\DuckAir\FlightOperations.key");
+                    break;
+                case "sign":
+                    var signature = CryptographyOperations.Sign("I am the very model of a modern major general.",
+                        @"C:\Pluralsight\Keys\DuckAIr\DonaldMallard.key");
+                    var isValid = CryptographyOperations.ValidateSignature(
+                        "I am the very model of a modern major general.", signature,
+                        @"C:\Pluralsight\Keys\DuckAir\DonaldMallard.cer");
                     break;
                 default:
                     ShowHelp();

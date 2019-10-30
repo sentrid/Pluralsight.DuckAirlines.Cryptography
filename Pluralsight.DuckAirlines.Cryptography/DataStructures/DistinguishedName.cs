@@ -1,4 +1,4 @@
-﻿namespace Pluralsight.TrustUs.DataStructures
+﻿namespace Pluralsight.DuckAirlines.Cryptography.DataStructures
 {
     public class DistinguishedName
     {
@@ -13,5 +13,7 @@
         public string OrganizationalUnit { get; set; }
 
         public string CommonName { get; set; }
+
+        public string EmailAddress { get; set; }
     }
 }
