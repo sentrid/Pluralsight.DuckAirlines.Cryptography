@@ -4,18 +4,25 @@ using System.Text;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Encodings;
 using Org.BouncyCastle.Crypto.Engines;
-using Org.BouncyCastle.Crypto.Parameters;
-using Org.BouncyCastle.Math;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
 
 namespace Pluralsight.DuckAirlines.Cryptography
 {
+    /// <summary>
+    /// Class CryptographyOperations.
+    /// </summary>
+    /// TODO Edit XML Comment Template for CryptographyOperations
     public class CryptographyOperations
     {
-        public static string RootDirectory { get; } = @"C:\Pluralsight\Keys\DuckAir";
-
+        /// <summary>
+        /// Encrypts the specified plain text data.
+        /// </summary>
+        /// <param name="plainTextData">The plain text data.</param>
+        /// <param name="certificateFileName">Name of the certificate file.</param>
+        /// <returns>System.Byte[].</returns>
+        /// TODO Edit XML Comment Template for Encrypt
         public static byte[] Encrypt(string plainTextData, string certificateFileName)
         {
             var bytesToEncrypt = Encoding.UTF8.GetBytes(plainTextData);
@@ -28,6 +35,13 @@ namespace Pluralsight.DuckAirlines.Cryptography
             return processBlock;
         }
 
+        /// <summary>
+        /// Decrypts the specified encrypted data.
+        /// </summary>
+        /// <param name="encryptedData">The encrypted data.</param>
+        /// <param name="privateKeyFileName">Name of the private key file.</param>
+        /// <returns>System.String.</returns>
+        /// TODO Edit XML Comment Template for Decrypt
         public static string Decrypt(byte[] encryptedData, string privateKeyFileName)
         {
             var decryptionEngine = new Pkcs1Encoding(new RsaEngine());
@@ -39,6 +53,13 @@ namespace Pluralsight.DuckAirlines.Cryptography
             return plainTextData;
         }
 
+        /// <summary>
+        /// Signs the specified data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="privateKeyFileName">Name of the private key file.</param>
+        /// <returns>System.String.</returns>
+        /// TODO Edit XML Comment Template for Sign
         public static string Sign(string data, string privateKeyFileName)
         {
             var rawKeyFromFile = File.ReadAllText(privateKeyFileName);
@@ -54,6 +75,14 @@ namespace Pluralsight.DuckAirlines.Cryptography
             return encodedSignature;
         }
 
+        /// <summary>
+        /// Validates the signature.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="encodedSignature">The encoded signature.</param>
+        /// <param name="certificateFileName">Name of the certificate file.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+        /// TODO Edit XML Comment Template for ValidateSignature
         public static bool ValidateSignature(string data, string encodedSignature, string certificateFileName)
         {
             var parser = new X509CertificateParser();

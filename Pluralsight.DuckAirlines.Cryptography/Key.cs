@@ -11,11 +11,21 @@ using Pluralsight.DuckAirlines.Cryptography.DataStructures;
 
 namespace Pluralsight.DuckAirlines.Cryptography
 {
+    /// <summary>
+    /// Class Key.
+    /// </summary>
+    /// TODO Edit XML Comment Template for Key
     public class Key
     {
+        /// <summary>
+        /// Generates the key pair.
+        /// </summary>
+        /// <param name="keyConfiguration">The key configuration.</param>
+        /// TODO Edit XML Comment Template for GenerateKeyPair
         public static void GenerateKeyPair(KeyConfiguration keyConfiguration)
         {
-            var rootDirectory = @"C:\Pluralsight\Keys\DuckAir";
+            const string rootDirectory = @"C:\Pluralsight\Keys\DuckAir";
+
             var keyGenerator = new RsaKeyPairGenerator();
             keyGenerator.Init(new KeyGenerationParameters(new SecureRandom(), 2048));
             var keyPair = keyGenerator.GenerateKeyPair();
@@ -46,6 +56,11 @@ namespace Pluralsight.DuckAirlines.Cryptography
             File.WriteAllText(rootDirectory + @"\" + keyConfiguration.KeystoreFileName, pvkTextWriter.ToString());
         }
 
+        /// <summary>
+        /// Configures the key pair.
+        /// </summary>
+        /// <returns>KeyConfiguration.</returns>
+        /// TODO Edit XML Comment Template for ConfigureKeyPair
         public static KeyConfiguration ConfigureKeyPair()
         {
             var keyConfiguration = new KeyConfiguration();
@@ -75,8 +90,6 @@ namespace Pluralsight.DuckAirlines.Cryptography
                 keyConfiguration.DistinguishedName.CommonName?.Replace(" ", string.Empty) + ".key";
             keyConfiguration.CertificateRequestFileName =
                 keyConfiguration.DistinguishedName.CommonName?.Replace(" ", string.Empty) + ".csr";
-            keyConfiguration.CertificateFileName =
-                keyConfiguration.DistinguishedName.CommonName?.Replace(" ", string.Empty) + ".cer";
 
             Console.Write("Private Key Password: ");
             keyConfiguration.PrivateKeyPassword = Console.ReadLine();
@@ -88,10 +101,6 @@ namespace Pluralsight.DuckAirlines.Cryptography
             Console.Write($"CSR FileName [{keyConfiguration.CertificateRequestFileName}]: ");
             tempFileName = Console.ReadLine();
             if (!string.IsNullOrEmpty(tempFileName)) keyConfiguration.CertificateRequestFileName = tempFileName;
-
-            Console.Write($"Certificate FileName [{keyConfiguration.CertificateFileName}]: ");
-            tempFileName = Console.ReadLine();
-            if (!string.IsNullOrEmpty(tempFileName)) keyConfiguration.CertificateFileName = tempFileName;
 
             return keyConfiguration;
         }
