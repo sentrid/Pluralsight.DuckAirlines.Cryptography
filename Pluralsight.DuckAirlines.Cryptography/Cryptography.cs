@@ -11,10 +11,10 @@ using Org.BouncyCastle.X509;
 namespace Pluralsight.DuckAirlines.Cryptography
 {
     /// <summary>
-    /// Class CryptographyOperations.
+    /// Class Cryptography.
     /// </summary>
-    /// TODO Edit XML Comment Template for CryptographyOperations
-    public class CryptographyOperations
+    /// TODO Edit XML Comment Template for Cryptography
+    public class Cryptography
     {
         /// <summary>
         /// Encrypts the specified plain text data.

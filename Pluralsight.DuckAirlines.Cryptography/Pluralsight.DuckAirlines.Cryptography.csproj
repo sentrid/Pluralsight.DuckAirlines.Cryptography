@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CryptographyOperations.cs" />
+    <Compile Include="Cryptography.cs" />
     <Compile Include="DataStructures\DistinguishedName.cs" />
     <Compile Include="DataStructures\KeyConfiguration.cs" />
     <Compile Include="Key.cs" />

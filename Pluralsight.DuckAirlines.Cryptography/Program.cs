@@ -42,7 +42,7 @@ namespace Pluralsight.DuckAirlines.Cryptography
                     // args[1] = certificate file name
                     // args[2] = plain text file name
                     // args[3] = encrypted data file name
-                    var encrypt = CryptographyOperations.Encrypt(
+                    var encrypt = Cryptography.Encrypt(
                         args[2],
                         args[1]);
                     File.WriteAllBytes(args[3], encrypt);
@@ -53,7 +53,7 @@ namespace Pluralsight.DuckAirlines.Cryptography
                     // args[2] = encrypted data file name
                     // args[3] = plain text file name
                     var encrypted = File.ReadAllBytes(args[2]);
-                    var plainText = CryptographyOperations.Decrypt(encrypted, args[1]);
+                    var plainText = Cryptography.Decrypt(encrypted, args[1]);
                     File.WriteAllText(args[3], plainText);
                     break;
 
@@ -62,7 +62,7 @@ namespace Pluralsight.DuckAirlines.Cryptography
                     // args[2] = data file name
                     // args[3] = signature file name
                     var dataToBeSigned = File.ReadAllText(args[2]);
-                    var generatedSignature = CryptographyOperations.Sign(dataToBeSigned,
+                    var generatedSignature = Cryptography.Sign(dataToBeSigned,
                         args[1]);
                     File.WriteAllText(args[3], generatedSignature);
                     break;
@@ -73,7 +73,7 @@ namespace Pluralsight.DuckAirlines.Cryptography
                     // args[3] = signature file name
                     var dataToBeVerified = File.ReadAllText(args[2]);
                     var existingSignature = File.ReadAllText(args[3]);
-                    var isValid = CryptographyOperations.ValidateSignature(
+                    var isValid = Cryptography.ValidateSignature(
                         dataToBeVerified, existingSignature,args[1]);
                     if (isValid)
                     {
