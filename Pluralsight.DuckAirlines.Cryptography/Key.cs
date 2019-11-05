@@ -12,25 +12,27 @@ using Pluralsight.DuckAirlines.Cryptography.DataStructures;
 namespace Pluralsight.DuckAirlines.Cryptography
 {
     /// <summary>
-    /// Class Key.
+    ///     Class Key.
     /// </summary>
     /// TODO Edit XML Comment Template for Key
-    public class Key
+    public static class Key
     {
+        private const string RootDirectory = @"C:\Pluralsight\Keys\DuckAir";
+
         /// <summary>
-        /// Generates the key pair.
+        ///     Generates the key pair.
         /// </summary>
         /// <param name="keyConfiguration">The key configuration.</param>
         /// TODO Edit XML Comment Template for GenerateKeyPair
         public static void GenerateKeyPair(KeyConfiguration keyConfiguration)
         {
-            const string rootDirectory = @"C:\Pluralsight\Keys\DuckAir";
-
             var keyGenerator = new RsaKeyPairGenerator();
             keyGenerator.Init(new KeyGenerationParameters(new SecureRandom(), 2048));
             var keyPair = keyGenerator.GenerateKeyPair();
 
-            var x500Name = new X509Name(
+            var signer = new Asn1SignatureFactory("SHA512WITHRSA", keyPair.Private);
+
+            var distinguishedName = new X509Name(
                 $"C={keyConfiguration.DistinguishedName.Country}, " +
                 $"ST={keyConfiguration.DistinguishedName.State}, " +
                 $"L={keyConfiguration.DistinguishedName.Locality}, " +
@@ -39,25 +41,25 @@ namespace Pluralsight.DuckAirlines.Cryptography
                 $"CN={keyConfiguration.DistinguishedName.CommonName}, " +
                 $"E={keyConfiguration.DistinguishedName.EmailAddress}");
 
-            var signatureFactory = new Asn1SignatureFactory("SHA512WITHRSA", keyPair.Private);
             var certificateSigningRequest =
-                new Pkcs10CertificationRequest(signatureFactory, x500Name, keyPair.Public, null);
+                new Pkcs10CertificationRequest(signer, distinguishedName, keyPair.Public, null);
 
             var csrTextWriter = new StringWriter();
             var pemCsrWriter = new PemWriter(csrTextWriter);
             pemCsrWriter.WriteObject(certificateSigningRequest);
             pemCsrWriter.Writer.Flush();
-            File.WriteAllText(rootDirectory + @"\" + keyConfiguration.CertificateRequestFileName, csrTextWriter.ToString());
+            File.WriteAllText(RootDirectory + @"\" + keyConfiguration.CertificateRequestFileName,
+                csrTextWriter.ToString());
 
             var pvkTextWriter = new StringWriter();
             var pemPvkWriter = new PemWriter(pvkTextWriter);
             pemPvkWriter.WriteObject(keyPair.Private);
             pemPvkWriter.Writer.Flush();
-            File.WriteAllText(rootDirectory + @"\" + keyConfiguration.KeystoreFileName, pvkTextWriter.ToString());
+            File.WriteAllText(RootDirectory + @"\" + keyConfiguration.KeystoreFileName, pvkTextWriter.ToString());
         }
 
         /// <summary>
-        /// Configures the key pair.
+        ///     Configures the key pair.
         /// </summary>
         /// <returns>KeyConfiguration.</returns>
         /// TODO Edit XML Comment Template for ConfigureKeyPair
@@ -92,7 +94,7 @@ namespace Pluralsight.DuckAirlines.Cryptography
                 keyConfiguration.DistinguishedName.CommonName?.Replace(" ", string.Empty) + ".csr";
 
             Console.Write("Private Key Password: ");
-            keyConfiguration.PrivateKeyPassword = Console.ReadLine();
+            Console.ReadLine();
 
             Console.Write($"\nKey Store FileName [{keyConfiguration.KeystoreFileName}]: ");
             var tempFileName = Console.ReadLine();

@@ -14,7 +14,7 @@ namespace Pluralsight.DuckAirlines.Cryptography
     /// Class Cryptography.
     /// </summary>
     /// TODO Edit XML Comment Template for Cryptography
-    public class Cryptography
+    public static class Cryptography
     {
         /// <summary>
         /// Encrypts the specified plain text data.
