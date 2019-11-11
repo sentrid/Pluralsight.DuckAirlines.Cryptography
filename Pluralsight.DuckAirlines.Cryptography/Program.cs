@@ -52,8 +52,7 @@ namespace Pluralsight.DuckAirlines.Cryptography
                     // args[1] = private key file name
                     // args[2] = encrypted data file name
                     // args[3] = plain text file name
-                    var encrypted = File.ReadAllBytes(args[2]);
-                    var plainText = Cryptography.Decrypt(encrypted, args[1]);
+                    var plainText = Cryptography.Decrypt(args[2], args[1]);
                     File.WriteAllText(args[3], plainText);
                     break;
 
@@ -97,7 +96,41 @@ namespace Pluralsight.DuckAirlines.Cryptography
         /// TODO Edit XML Comment Template for ShowHelp
         private static void ShowHelp()
         {
-            Console.WriteLine("HELP!!");
+            var helpMessage = "\nDuck Airlines Cryptography (DAC)\n" +
+                              "Handles PKI and asymmetric cryptography operations.\n\n" +
+                              "Create a new public private key pair\n" +
+                              "------------------------------------\n"+
+                              " > dac create\n\n" +
+                              "Encrypt data\n------------\n" + 
+                              " > dac encrypt {certificate file name} {plain text file name} {encrypted file name}\n\n"+
+                              "   {certificate file name} is the filename of the public key certificate of the party receiving the data.\n"+
+                              "   {plain text file name}  is the filename holding the data to be encrypted.\n"+
+                              "   {encrypted file name}   is the filename for the file you want to create to hold the encrypted data."+
+                              "Decrypt data\n" +
+                              "------------\n" +
+                              " > dac decrypt {private key file name} {encrypted data file name} {plain text file name}\n\n" +
+
+                              "   {private key file name} is the filename of the private key of the party receiving the data.\n" +
+                              "   {encrypted file name}   is the filename holding the encrypted data.\n" +
+                              "   {plain text file name}  is the filename for the file you want to create to hold the decrypted data.\n\n" +
+
+                              "Sign data\n" +
+                              "---------\n" +
+                              " > dac sign {private key file name} {data file name} {signature file name}\n\n" +
+
+                              "    {private key file name} is the filename that holds the private key of the party signing the data\n" +
+                              "    {data file name}        is the filename holding the data to be signed\n" +
+                              "    {signature file name}   is the filename for the file that you want to create to hold the signature\n\n" +
+
+                              "Verify data signature\n" +
+                              "---------------------\n" +
+                              " > dac verify  {certificate file name} {data file name} {signature file name}\n\n" +
+
+                              "    {certificate file name} is the filename that holds the public key of the party that signed the data\n" +
+                              "    {data file name}        is the filename holding the data that has been signed\n" +
+                              "    {signature file name}   is the filename holding the signature to be validated\n";
+
+            Console.WriteLine(helpMessage);
         }
     }
 }

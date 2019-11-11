@@ -29,7 +29,7 @@ namespace Pluralsight.DuckAirlines.Cryptography
             var keyGenerator = new RsaKeyPairGenerator();
             keyGenerator.Init(new KeyGenerationParameters(new SecureRandom(), 2048));
             var keyPair = keyGenerator.GenerateKeyPair();
-
+            
             var signer = new Asn1SignatureFactory("SHA512WITHRSA", keyPair.Private);
 
             var distinguishedName = new X509Name(
@@ -41,8 +41,8 @@ namespace Pluralsight.DuckAirlines.Cryptography
                 $"CN={keyConfiguration.DistinguishedName.CommonName}, " +
                 $"E={keyConfiguration.DistinguishedName.EmailAddress}");
 
-            var certificateSigningRequest =
-                new Pkcs10CertificationRequest(signer, distinguishedName, keyPair.Public, null);
+            var certificateSigningRequest = new Pkcs10CertificationRequest(
+                signer, distinguishedName, keyPair.Public, null);
 
             var csrTextWriter = new StringWriter();
             var pemCsrWriter = new PemWriter(csrTextWriter);
@@ -55,7 +55,8 @@ namespace Pluralsight.DuckAirlines.Cryptography
             var pemPvkWriter = new PemWriter(pvkTextWriter);
             pemPvkWriter.WriteObject(keyPair.Private);
             pemPvkWriter.Writer.Flush();
-            File.WriteAllText(RootDirectory + @"\" + keyConfiguration.KeystoreFileName, pvkTextWriter.ToString());
+            File.WriteAllText(RootDirectory + @"\" + keyConfiguration.KeystoreFileName,
+                pvkTextWriter.ToString());
         }
 
         /// <summary>
