@@ -3,22 +3,10 @@ using System.IO;
 
 namespace Pluralsight.DuckAirlines.Cryptography
 {
-    /// <summary>
-    /// Class Program.
-    /// </summary>
-    /// TODO Edit XML Comment Template for Program
     internal class Program
     {
-        /// <summary>
-        /// The key directory
-        /// </summary>
-        /// TODO Edit XML Comment Template for KeyDirectory
         private const string KeyDirectory = @"C:\Pluralsight\Keys\DuckAir";
 
-        /// <summary>
-        /// Defines the entry point of the application.
-        /// </summary>
-        /// <param name="args">The arguments.</param>
         private static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -90,10 +78,6 @@ namespace Pluralsight.DuckAirlines.Cryptography
             }
         }
 
-        /// <summary>
-        /// Shows the help.
-        /// </summary>
-        /// TODO Edit XML Comment Template for ShowHelp
         private static void ShowHelp()
         {
             var helpMessage = "\nDuck Airlines Cryptography (DAC)\n" +
